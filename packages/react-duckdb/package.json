@@ -23,8 +23,42 @@
         "csv"
     ],
     "files": [
-        "src"
+        "src",
+        "dist",
+        "dist-tsc"
     ],
-    "main": "src/index.ts",
-    "types": "src/index.ts"
+    "main": "dist/index.min.js",
+    "module": "dist/index.min.js",
+    "exports": {
+      ".": {
+        "types": "./dist-tsc/index.d.ts",
+        "import": "./dist/index.min.js"
+      }
+    },
+    "scripts": {
+        "build-tsc": "tsc --build",
+        "build": "rimraf ./dist/ && pnpm run build-lib",
+        "build-lib": "pnpm run build-lib:prod",
+        "build-lib:prod": "cross-env APP_ENV=production vite build --mode lib",
+        "build-lib:dev": "cross-env APP_ENV=development vite build --mode lib"
+    },
+    "dependencies": {
+        "@duckdb/duckdb-wasm": "^1.28.1-dev106.0",
+        "immutable": "^4.3.4"
+    },
+    "devDependencies": {
+        "typescript": "^5.3.3",
+        "@types/node": "^20.11.25",
+        "@types/react-dom": "^18.2.17",
+        "@types/emscripten": "^1.39.10",
+        "@vitejs/plugin-react": "^4.0.0",
+        "cross-env": "^7.0.0",
+        "rimraf": "^3.0.2",
+        "rollup-plugin-visualizer": "^5.8.3",
+        "vite": "^4.3.0"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    }
 }
